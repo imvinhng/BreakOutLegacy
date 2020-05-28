@@ -5,15 +5,15 @@ var x = canvas.width / 2;
 var y = canvas.height - 30;
 var dx = 4;
 var dy = -4;
-var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleHeight = 20;
+var paddleWidth = 150;
 var paddleX = (canvas.width - paddleWidth) / 2;
 var rightPressed = false;
 var leftPressed = false;
 var brickRowCount = 3;
 var brickColumnCount = 5;
-var brickWidth = 75;
-var brickHeight = 20;
+var brickWidth = 140;
+var brickHeight = 40;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
@@ -46,7 +46,11 @@ function keyDownHandler(e) {
     else if (e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = true;
     }
+    if(e.keyCode == 32){
+        alert("PAUSE MENU");
+    }
 }
+
 
 function keyUpHandler(e) {
     if (e.key == "Right" || e.key == "ArrowRight") {
@@ -56,6 +60,15 @@ function keyUpHandler(e) {
         leftPressed = false;
     }
 }
+
+document.addEventListener('touchmove', function (e) {
+    var screenX = e.clientX - canvas.offsetLeft;
+    if(screenX > 0 && screenX < canvas.width) {
+        paddleX = screenX - paddleWidth/2;
+    }
+})
+
+
 function collisionDetection() {
     for (var c = 0; c < brickColumnCount; c++) {
         for (var r = 0; r < brickRowCount; r++) {
@@ -134,7 +147,7 @@ function draw() {
     if (y + dy < ballRadius) {
         dy = -dy;
     }
-    else if (y + dy > canvas.height - ballRadius) {
+    else if (y + dy > canvas.height - 2*ballRadius) {
         if (x > paddleX && x < paddleX + paddleWidth) {
             if (y = y - paddleHeight) {
                 dy = -dy;
