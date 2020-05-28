@@ -31,6 +31,13 @@ for (var c = 0; c < brickColumnCount; c++) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
+document.addEventListener('touchmove', function (e) {
+    var screenX = e.clientX - canvas.offsetLeft;
+    if(screenX > 0 && screenX < canvas.width) {
+        paddleX = screenX - paddleWidth/2;
+    }
+}, false);
+
 
 function mouseMoveHandler(e) {
     var relativeX = e.clientX - canvas.offsetLeft;
@@ -61,12 +68,6 @@ function keyUpHandler(e) {
     }
 }
 
-document.addEventListener('touchmove', function (e) {
-    var screenX = e.clientX - canvas.offsetLeft;
-    if(screenX > 0 && screenX < canvas.width) {
-        paddleX = screenX - paddleWidth/2;
-    }
-})
 
 
 function collisionDetection() {
